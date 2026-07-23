@@ -76,7 +76,7 @@
 
     <nav class="no-print bg-slate-900 text-white w-full md:w-64 flex-shrink-0 z-10 flex flex-col shadow-xl">
         <div class="p-4 border-b border-slate-700 flex items-center gap-3">
-            <img src="https://drive.google.com/uc?export=view&id=1E8tjAd7j9DJaZgngDn38agUFCvwyUffa" alt="Logo Sekolah" class="w-12 h-12 object-contain bg-white rounded-full p-0.5" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://placehold.co/48x48/ffffff/000000?text=LOGO';">
+            <img src="https://lh3.googleusercontent.com/d/1E8tjAd7j9DJaZgngDn38agUFCvwyUffa" alt="Logo Sekolah" class="w-12 h-12 object-contain bg-white rounded-full p-0.5" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://placehold.co/48x48/ffffff/000000?text=LOGO';">
             <h1 class="text-lg font-bold leading-tight">Sistem<br>Olahraga</h1>
         </div>
         
@@ -681,19 +681,25 @@
             const isGenerated = teamsData.some(t => t.lane !== null);
 
             let html = `
-                <div class="print-only text-center mb-8 mt-2">
-                    <h1 class="text-3xl font-bold uppercase text-black">Kejohanan Olahraga</h1>
-                    <h2 class="text-xl font-semibold text-black mt-2">Borang Penyelia Peserta (Marshall)</h2>
-                    <p class="text-lg mt-3 text-black">Acara: <b class="border-b-2 border-black pb-1">${currentEvent}</b></p>
-                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden print:border-none print:shadow-none mb-6">
+                    <div class="p-6 text-center border-b border-gray-200 print:border-black bg-white">
+                        <img src="https://lh3.googleusercontent.com/d/1E8tjAd7j9DJaZgngDn38agUFCvwyUffa" alt="Logo Sekolah" class="w-16 h-16 mx-auto mb-2 object-contain" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://placehold.co/64x64/ffffff/000000?text=LOGO';">
+                        <h1 class="text-xl md:text-2xl font-bold uppercase text-gray-900 print:text-black">Kejohanan Olahraga</h1>
+                        <h2 class="text-lg font-semibold text-gray-700 print:text-black mt-1">Borang Penyelia Peserta (Marshall)</h2>
+                        <div class="mt-2 inline-block px-4 py-1 bg-blue-50 border border-blue-200 rounded-full print:bg-white print:border-none">
+                            <span class="text-sm font-semibold text-blue-800 print:text-black">Acara: ${currentEvent}</span>
+                        </div>
+                    </div>
             `;
 
             if(!isGenerated) {
                 return html + `
-                    <div class="bg-yellow-50 text-yellow-800 p-4 rounded-lg border border-yellow-200 no-print">
-                        Lorong belum dijana. Sila ke tab <b>Jana Lorong</b> untuk menetapkan lorong sebelum melihat borang ini.
+                    <div class="p-6">
+                        <div class="bg-yellow-50 text-yellow-800 p-4 rounded-lg border border-yellow-200">
+                            Lorong belum dijana. Sila ke tab <b>Jana Lorong</b> untuk menetapkan lorong sebelum melihat borang ini.
+                        </div>
                     </div>
-                `;
+                </div>`;
             }
 
             const assignedTeams = [...teamsData].filter(t => t.lane !== null).sort((a,b) => a.lane - b.lane);
@@ -764,19 +770,25 @@
             const isGenerated = teamsData.some(t => t.lane !== null);
 
             let html = `
-                <div class="print-only text-center mb-8 mt-2">
-                    <h1 class="text-3xl font-bold uppercase text-black">Kejohanan Olahraga</h1>
-                    <h2 class="text-xl font-semibold text-black mt-2">Borang Hakim Penamat & Pencatat Masa</h2>
-                    <p class="text-lg mt-3 text-black">Acara: <b class="border-b-2 border-black pb-1">${currentEvent}</b></p>
-                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden print:border-none print:shadow-none mb-6">
+                    <div class="p-6 text-center border-b border-gray-200 print:border-black bg-white">
+                        <img src="https://lh3.googleusercontent.com/d/1E8tjAd7j9DJaZgngDn38agUFCvwyUffa" alt="Logo Sekolah" class="w-16 h-16 mx-auto mb-2 object-contain" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://placehold.co/64x64/ffffff/000000?text=LOGO';">
+                        <h1 class="text-xl md:text-2xl font-bold uppercase text-gray-900 print:text-black">Kejohanan Olahraga</h1>
+                        <h2 class="text-lg font-semibold text-gray-700 print:text-black mt-1">Borang Hakim Penamat & Pencatat Masa</h2>
+                        <div class="mt-2 inline-block px-4 py-1 bg-indigo-50 border border-indigo-200 rounded-full print:bg-white print:border-none">
+                            <span class="text-sm font-semibold text-indigo-800 print:text-black">Acara: ${currentEvent}</span>
+                        </div>
+                    </div>
             `;
 
             if(!isGenerated) {
                 return html + `
-                    <div class="bg-yellow-50 text-yellow-800 p-4 rounded-lg border border-yellow-200 no-print">
-                        Lorong belum dijana. Sila ke tab <b>Jana Lorong</b> untuk menetapkan lorong sebelum melihat borang ini.
+                    <div class="p-6">
+                        <div class="bg-yellow-50 text-yellow-800 p-4 rounded-lg border border-yellow-200">
+                            Lorong belum dijana. Sila ke tab <b>Jana Lorong</b> untuk menetapkan lorong sebelum melihat borang ini.
+                        </div>
                     </div>
-                `;
+                </div>`;
             }
 
             const assignedTeams = [...teamsData].filter(t => t.lane !== null).sort((a,b) => a.lane - b.lane);
