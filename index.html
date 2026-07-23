@@ -30,8 +30,8 @@
             </div>
             
             <div class="flex items-center gap-3">
-                <button onclick="manualSync()" class="text-xs font-medium px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition flex items-center gap-1 shadow-sm">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                <button onclick="manualRefresh()" class="text-xs font-medium px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition flex items-center gap-1 shadow-sm" title="Muat turun data terkini dari Google Sheet">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                     Kemas Kini
                 </button>
                 <div id="sync-status" class="text-xs font-medium px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 flex items-center gap-1.5">
@@ -239,6 +239,36 @@
                 ensureDataStructure();
                 renderContent();
                 updateSyncStatus('success', 'Mod Luar Talian');
+            }
+        }
+
+        async function manualRefresh() {
+            const scriptUrl = localStorage.getItem('olahraga_script_url') || DEFAULT_SCRIPT_URL;
+            if (!scriptUrl) {
+                showToast("Sila tetapkan URL Web App terlebih dahulu.");
+                return;
+            }
+            updateSyncStatus('syncing', 'Memuat turun...');
+            try {
+                const response = await fetch(`${scriptUrl}?action=load`, { method: 'GET', redirect: 'follow' });
+                const result = await response.json();
+                if(result.status === 'success' && result.data) {
+                    eventsData = result.data;
+                    ensureDataStructure();
+                    saveDataLocally();
+                    renderContent();
+                    updateSyncStatus('success', 'Diselaraskan ✓');
+                    showToast("Data berjaya dikemaskini dari awan!");
+                } else {
+                    ensureDataStructure();
+                    renderContent();
+                    updateSyncStatus('success', 'Sedia (Lokal)');
+                    showToast("Data terkini telah dimuatkan.");
+                }
+            } catch(e) {
+                console.error("Cloud refresh error:", e);
+                updateSyncStatus('error', 'Ralat Rangkaian ✗');
+                showToast("Gagal memuat turun data dari awan.");
             }
         }
 
