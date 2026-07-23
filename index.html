@@ -69,9 +69,20 @@
                     <svg class="w-5 h-5 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                 </div>
                 <p class="text-xs opacity-90 mb-3">Kembali ke portal utama sistem pengurusan sekolah.</p>
-                <a href="https://g-31250208-web.github.io/sps/" class="w-full bg-white text-orange-600 hover:bg-orange-50 font-medium py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition shadow-sm">
+                <a href="https://g-31250208-web.github.io/sps/" target="_self" class="w-full bg-white text-orange-600 hover:bg-orange-50 font-medium py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition shadow-sm">
                     Papan Pemuka
                 </a>
+            </div>
+
+            <!-- Senarai Pelari Berdaftar -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 space-y-3">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                    <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-500">Pelari Berdaftar</h2>
+                    <span id="registered-count-badge" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">0 Pelari</span>
+                </div>
+                <div id="registered-runners-list" class="max-h-64 overflow-y-auto space-y-2 pr-1 text-xs divide-y divide-slate-100">
+                    <!-- Dynamic runner list will be populated here -->
+                </div>
             </div>
         </aside>
 
@@ -399,77 +410,57 @@
                 printAction.classList.remove('hidden');
                 document.getElementById('app-content').innerHTML = renderJudgeHTML();
             }
+
+            renderRegisteredRunnersSidebar();
         }
 
-        function renderRegisterHTML() {
-            const currentTeams = eventsData[currentEventId] || [];
-            const activeTeamData = currentTeams.find(t => t.houseId === currentHouseId && t.teamCode === currentTeamId) || { runners: ['', '', '', ''] };
+        function renderRegisteredRunnersSidebar() {
+            const listEl = document.getElementById('registered-runners-list');
+            const badgeEl = document.getElementById('registered-count-badge');
+            if (!listEl || !badgeEl) return;
 
-            let html = `
-                <div class="space-y-6">
-                    <!-- Event Selector Tabs -->
-                    <div class="flex flex-wrap gap-2 pb-4 border-b border-slate-200">
-                        ${EVENTS.map(ev => `
-                            <button onclick="changeEvent('${ev.id}')" class="px-4 py-2 rounded-xl text-xs font-semibold transition ${currentEventId === ev.id ? 'bg-indigo-900 text-white shadow' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
-                                ${ev.name}
-                            </button>
-                        `).join('')}
-                    </div>
+            let registeredRunners = [];
+            let totalCount = 0;
 
-                    <!-- Dropdown Selectors for House and Team -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Pilih Rumah Sukan</label>
-                            <select onchange="changeHouseReg(this.value)" class="w-full bg-white rounded-xl border border-slate-300 p-3 text-sm font-medium focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none">
-                                ${HOUSES.map(h => `<option value="${h.id}" ${currentHouseId === h.id ? 'selected' : ''}>Rumah ${h.name}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Pilih Pasukan</label>
-                            <select onchange="changeTeamReg(this.value)" class="w-full bg-white rounded-xl border border-slate-300 p-3 text-sm font-medium focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none">
-                                <option value="A" ${currentTeamId === 'A' ? 'selected' : ''}>Pasukan A</option>
-                                <option value="B" ${currentTeamId === 'B' ? 'selected' : ''}>Pasukan B</option>
-                            </select>
-                        </div>
-                    </div>
+            EVENTS.forEach(ev => {
+                const teams = eventsData[ev.id] || [];
+                teams.forEach(t => {
+                    if (t.runners) {
+                        t.runners.forEach((r, idx) => {
+                            if (r && r.trim() !== '') {
+                                totalCount++;
+                                registeredRunners.push({
+                                    name: r.trim(),
+                                    eventName: ev.name.replace(' - ', ' '),
+                                    houseName: t.houseName,
+                                    houseTheme: t.houseTheme,
+                                    teamName: t.teamName,
+                                    runnerNo: idx + 1
+                                });
+                            }
+                        });
+                    }
+                });
+            });
 
-                    <!-- Runner Inputs Form -->
-                    <div class="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
-                        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-                            <h3 class="font-bold text-base text-slate-800 flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full ${currentHouseId === 'merah' ? 'bg-red-500' : currentHouseId === 'biru' ? 'bg-blue-500' : currentHouseId === 'hijau' ? 'bg-green-500' : 'bg-yellow-500'}"></span>
-                                Rumah ${currentHouseId.toUpperCase()} - Pasukan ${currentTeamId}
-                            </h3>
-                            <span class="text-xs text-slate-400">4 Pelari Diperlukan</span>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            `;
+            badgeEl.innerText = `${totalCount} Pelari`;
 
-            for(let i=0; i<4; i++) {
-                html += `
-                    <div>
-                        <label class="block text-xs font-medium text-slate-600 mb-1">Pelari ${i+1}</label>
-                        <input type="text" 
-                            oninput="updateRunnerName('${activeTeamData.uid}', ${i}, this.value)"
-                            value="${activeTeamData.runners[i] || ''}" 
-                            placeholder="Masukkan nama penuh pelari ${i+1}..."
-                            class="w-full text-sm rounded-xl border border-slate-300 p-3 bg-slate-50 focus:bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition">
-                    </div>
-                `;
+            if (registeredRunners.length === 0) {
+                listEl.innerHTML = `<p class="text-slate-400 text-center py-4 text-[11px] italic">Belum ada pelari mendaftar.</p>`;
+                return;
             }
 
-            html += `
-                        </div>
-                        <div class="pt-4 border-t border-slate-100 flex justify-end">
-                            <button onclick="manualSync()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-xl shadow-sm transition flex items-center gap-2 text-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                Simpan Data
-                            </button>
-                        </div>
+            listEl.innerHTML = registeredRunners.map(r => `
+                <div class="pt-2 first:pt-0 flex items-start justify-between gap-2">
+                    <div class="min-w-0 flex-1">
+                        <p class="font-semibold text-slate-800 truncate">${r.name}</p>
+                        <p class="text-[10px] text-slate-500 truncate">${r.eventName} (${r.teamName})</p>
                     </div>
+                    <span class="shrink-0 text-[10px] font-medium px-2 py-0.5 rounded-md ${r.houseTheme.badge}">
+                        ${r.houseName}
+                    </span>
                 </div>
-            `;
-            return html;
+            `).join('');
         }
 
         function changeEvent(eventId) {
@@ -493,8 +484,89 @@
             const team = teamsList.find(t => t.uid === uid);
             if (team) {
                 team.runners[index] = value;
+                renderRegisteredRunnersSidebar();
                 triggerAutoSync();
             }
+        }
+
+        function renderRegisterHTML() {
+            const teams = eventsData[currentEventId] || [];
+            const currentTeam = teams.find(t => t.houseId === currentHouseId && (t.teamCode === currentTeamId || t.teamName.includes(currentTeamId))) || {
+                uid: `${currentEventId}_${currentHouseId}_${currentTeamId}`,
+                runners: ['', '', '', '']
+            };
+
+            const currentHouseObj = HOUSES.find(h => h.id === currentHouseId) || HOUSES[0];
+
+            return `
+                <div class="space-y-6">
+                    <!-- 1. Pilih Acara -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">1. Pilih Acara</label>
+                        <div class="flex flex-wrap gap-2">
+                            ${EVENTS.map(ev => `
+                                <button onclick="changeEvent('${ev.id}')" class="px-4 py-2.5 rounded-xl text-xs font-semibold transition ${currentEventId === ev.id ? 'bg-indigo-900 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                                    ${ev.name}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- 2. Pilih Rumah Sukan -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">2. Pilih Rumah Sukan</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            ${HOUSES.map(h => `
+                                <button onclick="changeHouseReg('${h.id}')" class="p-3 rounded-xl border text-left transition flex items-center justify-between ${currentHouseId === h.id ? `${h.theme.bg} ${h.theme.border} ring-2 ring-indigo-500/20` : 'border-slate-200 hover:bg-slate-50'}">
+                                    <span class="font-bold text-sm ${currentHouseId === h.id ? h.theme.text : 'text-slate-700'}">Rumah ${h.name}</span>
+                                    <span class="w-3 h-3 rounded-full ${h.id === 'merah' ? 'bg-red-500' : h.id === 'biru' ? 'bg-blue-500' : h.id === 'hijau' ? 'bg-green-500' : 'bg-yellow-400'}"></span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- 3. Pilih Pasukan -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">3. Pilih Pasukan</label>
+                        <div class="flex gap-3">
+                            ${['A', 'B'].map(tCode => `
+                                <button onclick="changeTeamReg('${tCode}')" class="px-5 py-2.5 rounded-xl text-xs font-semibold transition ${currentTeamId === tCode ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                                    Pasukan ${tCode}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Input Nama Pelari -->
+                    <div class="pt-4 border-t border-slate-200 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-slate-800 text-sm">Senarai Nama Pelari (${currentHouseObj.name} - Pasukan ${currentTeamId})</h3>
+                            <span class="text-xs px-2.5 py-1 rounded-full ${currentHouseObj.theme.badge}">Acara Aktif</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            ${[0, 1, 2, 3].map(idx => `
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Pelari ${idx + 1}</label>
+                                    <input type="text" 
+                                           value="${(currentTeam.runners && currentTeam.runners[idx]) ? currentTeam.runners[idx] : ''}" 
+                                           oninput="updateRunnerName('${currentTeam.uid}', ${idx}, this.value)" 
+                                           placeholder="Nama Pelari ${idx + 1}" 
+                                           class="w-full text-xs rounded-xl border border-slate-300 p-3 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition bg-white shadow-sm">
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Butang Simpan Data -->
+                    <div class="pt-4 border-t border-slate-100 flex justify-end">
+                        <button onclick="manualSync()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-xl text-xs transition shadow-sm flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                            Simpan Data
+                        </button>
+                    </div>
+                </div>
+            `;
         }
 
         function renderLanesHTML() {
