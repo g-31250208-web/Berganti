@@ -39,7 +39,6 @@
                 padding: 8px !important;
                 color: #000 !important;
             }
-            /* Remove background colors for printing to save ink, except light grays */
             th {
                 background-color: #f3f4f6 !important;
                 -webkit-print-color-adjust: exact;
@@ -77,7 +76,7 @@
 
     <nav class="no-print bg-slate-900 text-white w-full md:w-64 flex-shrink-0 z-10 flex flex-col shadow-xl">
         <div class="p-4 border-b border-slate-700 flex items-center gap-3">
-            <img src="https://lh3.googleusercontent.com/d/1E8tjAd7j9DJaZgngDn38agUFCvwyUffa=s220" alt="Logo Sekolah" class="w-12 h-12 object-contain bg-white rounded-full p-0.5" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://placehold.co/48x48/ffffff/000000?text=LOGO';">
+            <img src="https://drive.google.com/uc?export=view&id=1E8tjAd7j9DJaZgngDn38agUFCvwyUffa" alt="Logo Sekolah" class="w-12 h-12 object-contain bg-white rounded-full p-0.5" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://placehold.co/48x48/ffffff/000000?text=LOGO';">
             <h1 class="text-lg font-bold leading-tight">Sistem<br>Olahraga</h1>
         </div>
         
@@ -98,11 +97,15 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
                 <span class="hidden md:inline">Borang Hakim</span>
             </button>
+            <button onclick="openConfigModal()" class="w-full text-left px-4 py-3 rounded-lg transition-colors flex items-center gap-2 hover:bg-slate-800 text-cyan-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <span class="hidden md:inline">Tetapan Google Sheet</span>
+            </button>
         </div>
         
         <div class="p-2 border-t border-slate-700">
-            <a href="https://g-31250208-web.github.io/sps/" class="w-full text-left px-4 py-3 rounded-lg transition-colors flex items-center gap-2 hover:bg-slate-800 text-slate-300 bg-slate-800/50">
-                <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+            <a href="https://g-31250208-web.github.io/sps/" class="w-full text-left px-4 py-3 rounded-lg transition-all flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-medium shadow-md">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                 <span class="hidden md:inline">Papan Pemuka</span>
             </a>
         </div>
@@ -110,20 +113,28 @@
 
     <main class="flex-1 overflow-y-auto bg-slate-50 relative p-4 md:p-8" id="main-content">
         <div class="no-print bg-white rounded-xl shadow-sm p-4 mb-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div>
-                <label class="block text-sm font-semibold text-gray-600 mb-1">Pilih Acara</label>
-                <select id="event-selector" onchange="changeEvent(this.value)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 min-w-[250px]">
-                    <option value="4x100m Lelaki">4x100m Lelaki</option>
-                    <option value="4x100m Perempuan">4x100m Perempuan</option>
-                    <option value="4x200m Lelaki">4x200m Lelaki</option>
-                    <option value="4x200m Perempuan">4x200m Perempuan</option>
-                </select>
+            <div class="flex items-center gap-4 w-full sm:w-auto">
+                <div class="flex-1">
+                    <label class="block text-sm font-semibold text-gray-600 mb-1">Pilih Acara</label>
+                    <select id="event-selector" onchange="changeEvent(this.value)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 min-w-[250px]">
+                        <option value="4x100m Lelaki">4x100m Lelaki</option>
+                        <option value="4x100m Perempuan">4x100m Perempuan</option>
+                        <option value="4x200m Lelaki">4x200m Lelaki</option>
+                        <option value="4x200m Perempuan">4x200m Perempuan</option>
+                    </select>
+                </div>
             </div>
-            <div id="print-action" class="hidden">
-                <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-5 rounded-lg flex items-center gap-2 transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                    Cetak Borang
-                </button>
+            <div class="flex items-center gap-3">
+                <div id="sync-status" class="text-xs font-medium px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-slate-400" id="sync-dot"></span>
+                    <span id="sync-text">Sedia</span>
+                </div>
+                <div id="print-action" class="hidden">
+                    <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-5 rounded-lg flex items-center gap-2 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                        Cetak Borang
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -132,6 +143,21 @@
         </div>
 
     </main>
+
+    <div id="config-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-xl shadow-2xl p-6 max-w-md w-full mx-4 transform scale-95 transition-transform duration-300" id="config-modal-content">
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Tetapan Pautan Google Sheet</h3>
+            <p class="text-gray-600 text-sm mb-4">Masukkan URL Web App Google Apps Script anda di bawah untuk membolehkan auto-sync ke Google Sheets.</p>
+            <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-1">URL Web App</label>
+                <input type="text" id="script-url-input" placeholder="https://script.google.com/macros/s/.../exec" class="w-full text-sm rounded-md border-gray-300 shadow-sm border p-2.5 outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="flex justify-end gap-3">
+                <button onclick="closeConfigModal()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition font-medium text-sm">Batal</button>
+                <button onclick="saveScriptUrl()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition font-medium text-sm">Simpan & Muat Turun</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Custom Modal Structure -->
     <div id="custom-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden opacity-0 transition-opacity duration-300">
@@ -161,6 +187,7 @@
             { id: 'kuning', name: 'Kuning', bg: 'bg-yellow-100', text: 'text-yellow-800', border: 'border-yellow-300', iconColor: 'text-yellow-500' }
         ];
         const teams = ['A', 'B'];
+        const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxc4gm8QLhGNOj1wyCNAbNa3mNVppyoik7Gnf9eMjVZfXKZEba2Bmnt31BQQcaUYjsO/exec';
 
         // State Variables
         let currentTab = 'pendaftaran';
@@ -168,31 +195,125 @@
         let currentHouseReg = 'merah';
         let currentTeamReg = 'A';
         let eventsData = {};
+        let syncTimeout = null;
 
-        // Initialize Data Structure
-        function initData() {
+        // Ensure data structure integrity
+        function ensureDataStructure() {
+            if (!eventsData || typeof eventsData !== 'object') {
+                eventsData = {};
+            }
             categories.forEach(cat => {
-                eventsData[cat] = [];
+                if (!eventsData[cat] || !Array.isArray(eventsData[cat])) {
+                    eventsData[cat] = [];
+                }
                 houses.forEach(house => {
                     teams.forEach(team => {
-                        eventsData[cat].push({
-                            uid: `${cat}-${house.id}-${team}`.replace(/\s+/g, '-'),
-                            houseId: house.id,
-                            houseName: house.name,
-                            houseTheme: { bg: house.bg, text: house.text, border: house.border, icon: house.iconColor },
-                            teamName: team,
-                            runners: ['', '', '', ''],
-                            lane: null
-                        });
+                        let existing = eventsData[cat].find(t => t.houseId === house.id && t.teamName === team);
+                        if (!existing) {
+                            eventsData[cat].push({
+                                uid: `${cat}-${house.id}-${team}`.replace(/\s+/g, '-'),
+                                houseId: house.id,
+                                houseName: house.name,
+                                houseTheme: { bg: house.bg, text: house.text, border: house.border, icon: house.iconColor },
+                                teamName: team,
+                                runners: ['', '', '', ''],
+                                lane: null
+                            });
+                        } else {
+                            if (!existing.runners || !Array.isArray(existing.runners)) {
+                                existing.runners = ['', '', '', ''];
+                            }
+                            existing.houseTheme = { bg: house.bg, text: house.text, border: house.border, icon: house.iconColor };
+                        }
                     });
                 });
             });
-            // Try load from local storage
+        }
+
+        // Initialize Data Structure & Cloud Load
+        async function initData() {
+            ensureDataStructure();
+
             const saved = localStorage.getItem('olahragaData');
             if(saved) {
                 try {
                     eventsData = JSON.parse(saved);
-                } catch(e) { console.error("Error loading data", e); }
+                    ensureDataStructure();
+                } catch(e) { console.error("Error loading local data", e); }
+            }
+
+            const scriptUrl = localStorage.getItem('olahraga_script_url') || DEFAULT_SCRIPT_URL;
+            if(scriptUrl) {
+                await loadFromCloud(scriptUrl);
+            } else {
+                renderContent();
+            }
+        }
+
+        async function loadFromCloud(url) {
+            updateSyncStatus('syncing', 'Memuat turun...');
+            try {
+                const response = await fetch(`${url}?action=load`);
+                const result = await response.json();
+                if(result.status === 'success' && result.data) {
+                    eventsData = result.data;
+                    ensureDataStructure();
+                    saveDataLocally();
+                    renderContent();
+                    updateSyncStatus('success', 'Diselaraskan ✓');
+                } else {
+                    ensureDataStructure();
+                    renderContent();
+                    updateSyncStatus('success', 'Sedia (Lokal)');
+                }
+            } catch(e) {
+                console.error("Cloud load error:", e);
+                ensureDataStructure();
+                renderContent();
+                updateSyncStatus('success', 'Mod Luar Talian');
+            }
+        }
+
+        function triggerAutoSync() {
+            saveDataLocally();
+            
+            const scriptUrl = localStorage.getItem('olahraga_script_url') || DEFAULT_SCRIPT_URL;
+            if (!scriptUrl) return;
+
+            updateSyncStatus('syncing', 'Menyimpan...');
+            if (syncTimeout) clearTimeout(syncTimeout);
+
+            syncTimeout = setTimeout(async () => {
+                try {
+                    const response = await fetch(scriptUrl, {
+                        method: 'POST',
+                        body: JSON.stringify(eventsData)
+                    });
+                    const result = await response.json();
+                    if(result.status === 'success') {
+                        updateSyncStatus('success', 'Diselaraskan ✓');
+                    } else {
+                        updateSyncStatus('error', 'Ralat Simpan ✗');
+                    }
+                } catch(e) {
+                    console.error("Cloud sync error:", e);
+                    updateSyncStatus('error', 'Ralat Rangkaian ✗');
+                }
+            }, 1000);
+        }
+
+        function updateSyncStatus(state, text) {
+            const dot = document.getElementById('sync-dot');
+            const label = document.getElementById('sync-text');
+            if(!dot || !label) return;
+            
+            label.textContent = text;
+            if(state === 'syncing') {
+                dot.className = 'w-2 h-2 rounded-full bg-amber-500 animate-pulse';
+            } else if(state === 'success') {
+                dot.className = 'w-2 h-2 rounded-full bg-emerald-500';
+            } else {
+                dot.className = 'w-2 h-2 rounded-full bg-rose-500';
             }
         }
 
@@ -200,10 +321,45 @@
             localStorage.setItem('olahragaData', JSON.stringify(eventsData));
         }
 
+        function openConfigModal() {
+            const modal = document.getElementById('config-modal');
+            const modalContent = document.getElementById('config-modal-content');
+            document.getElementById('script-url-input').value = localStorage.getItem('olahraga_script_url') || DEFAULT_SCRIPT_URL;
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeConfigModal() {
+            const modal = document.getElementById('config-modal');
+            const modalContent = document.getElementById('config-modal-content');
+            
+            modal.classList.add('opacity-0');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        async function saveScriptUrl() {
+            const url = document.getElementById('script-url-input').value.trim();
+            if(url) {
+                localStorage.setItem('olahraga_script_url', url);
+                closeConfigModal();
+                showToast("URL Web App disimpan!");
+                await loadFromCloud(url);
+            } else {
+                localStorage.removeItem('olahraga_script_url');
+                closeConfigModal();
+                showToast("URL dipadam.");
+                updateSyncStatus('success', 'Sedia (Lokal)');
+            }
+        }
+
         function switchTab(tabId) {
             currentTab = tabId;
             
-            // Update Nav Styles
             const navButtons = ['pendaftaran', 'jana', 'marshall', 'hakim'];
             navButtons.forEach(id => {
                 const btn = document.getElementById(`nav-${id}`);
@@ -214,7 +370,6 @@
                 }
             });
 
-            // Show/Hide Print Button
             const printBtn = document.getElementById('print-action');
             if(tabId === 'marshall' || tabId === 'hakim') {
                 printBtn.classList.remove('hidden');
@@ -231,8 +386,9 @@
         }
 
         function renderContent() {
+            ensureDataStructure();
             const container = document.getElementById('tab-content');
-            container.innerHTML = ''; // Clear current
+            container.innerHTML = '';
 
             switch (currentTab) {
                 case 'pendaftaran':
@@ -323,38 +479,40 @@
             const team = eventsData[currentEvent].find(t => t.uid === uid);
             if(team) {
                 team.runners[index] = value;
-                saveDataLocally();
+                triggerAutoSync();
             }
         }
 
         function getJanaLorongHTML() {
             const teamsData = eventsData[currentEvent];
-            const isGenerated = teamsData.every(t => t.lane !== null);
+            const activeTeams = teamsData.filter(t => t.runners.some(r => r && r.trim() !== ''));
+            const isGenerated = teamsData.some(t => t.lane !== null);
 
             let html = `
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-w-4xl mx-auto no-print">
                     <div class="text-center mb-8">
                         <h2 class="text-2xl font-bold text-gray-800 mb-2">Penjanaan Lorong Automatik</h2>
                         <p class="text-gray-500">Acara: <span class="font-semibold">${currentEvent}</span></p>
+                        <p class="text-xs text-blue-600 mt-1">Pasukan aktif berdaftar: <b>${activeTeams.length}</b> pasukan (Lorong luar selebihnya dikosongkan dan dielakkan rumah sama bersebelahan).</p>
                         
                         <div class="mt-6">
                             <button onclick="confirmJanaLorong()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105 flex items-center gap-2 mx-auto">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                                ${isGenerated ? 'Jana Semula Lorong Rawak' : 'Jana Lorong Sekarang'}
+                                ${isGenerated ? 'Jana Semula Lorong Pintar' : 'Jana Lorong Sekarang'}
                             </button>
                         </div>
                     </div>
             `;
 
             if(isGenerated) {
-                const sortedByLane = [...teamsData].sort((a,b) => a.lane - b.lane);
+                const assignedTeams = [...teamsData].filter(t => t.lane !== null).sort((a,b) => a.lane - b.lane);
                 html += `
                     <div class="mt-8 border-t border-gray-200 pt-6">
                         <h3 class="font-semibold text-lg mb-4 text-center">Keputusan Undian Lorong</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 `;
                 
-                sortedByLane.forEach(team => {
+                assignedTeams.forEach(team => {
                     html += `
                         <div class="flex items-center p-4 bg-gray-50 border border-gray-100 rounded-lg">
                             <div class="flex-shrink-0 w-12 h-12 bg-slate-800 text-white rounded-full flex items-center justify-center font-bold text-xl mr-4 shadow-inner">
@@ -374,7 +532,7 @@
                 html += `
                     <div class="mt-8 text-center p-8 bg-gray-50 rounded-lg border border-dashed border-gray-300">
                         <svg class="w-16 h-16 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        <p class="text-gray-500">Lorong belum dijana. Klik butang di atas untuk mulakan undian lorong.</p>
+                        <p class="text-gray-500">Lorong belum dijana. Klik butang di atas untuk mulakan undian pintar.</p>
                     </div>
                 `;
             }
@@ -383,15 +541,13 @@
             return html;
         }
 
-        let confirmAction = null;
-
         function confirmJanaLorong() {
             const teamsData = eventsData[currentEvent];
-            const isGenerated = teamsData.every(t => t.lane !== null);
+            const isGenerated = teamsData.some(t => t.lane !== null);
             
-            let message = "Sistem akan menetapkan lorong 1 hingga 8 secara rawak untuk semua pasukan.";
+            let message = "Sistem akan menetapkan lorong secara automatik dan mengosongkan lorong luar serta mengelakkan rumah sama bersebelahan.";
             if(isGenerated) {
-                message = "Lorong telah dijana sebelum ini. Adakah anda pasti untuk membuat janaan semula? Keputusan lama akan hilang.";
+                message = "Lorong telah dijana sebelum ini. Adakah anda pasti untuk membuat janaan semula?";
             }
 
             showModal("Pengesahan Jana Lorong", message, () => {
@@ -400,19 +556,81 @@
         }
 
         function executeJanaLorong() {
-            let lanes = [1, 2, 3, 4, 5, 6, 7, 8];
-            for (let i = lanes.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [lanes[i], lanes[j]] = [lanes[j], lanes[i]];
+            let allTeams = eventsData[currentEvent];
+            
+            // Reset all lanes to null
+            allTeams.forEach(t => t.lane = null);
+
+            // Filter active teams (teams with at least one runner name entered)
+            let activeTeams = allTeams.filter(t => t.runners.some(r => r && r.trim() !== ''));
+            if (activeTeams.length === 0) {
+                activeTeams = [...allTeams]; // Fallback to all if none entered
             }
 
-            eventsData[currentEvent].forEach((team, idx) => {
-                team.lane = lanes[idx];
-            });
-            saveDataLocally();
+            let n = activeTeams.length;
+            let availableLanes = [];
+            for (let i = 1; i <= n; i++) {
+                availableLanes.push(i);
+            }
 
+            // Shuffle & verify no adjacent same-house teams
+            let valid = false;
+            let bestAssignment = null;
+            let attempts = 0;
+
+            while (!valid && attempts < 1500) {
+                attempts++;
+                let shuffledLanes = [...availableLanes];
+                for (let i = shuffledLanes.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffledLanes[i], shuffledLanes[j]] = [shuffledLanes[j], shuffledLanes[i]];
+                }
+
+                let hasAdjacentSameHouse = false;
+                let assignment = activeTeams.map((team, idx) => ({
+                    team: team,
+                    lane: shuffledLanes[idx]
+                }));
+
+                assignment.sort((a, b) => a.lane - b.lane);
+
+                for (let i = 0; i < assignment.length - 1; i++) {
+                    if (assignment[i+1].lane === assignment[i].lane + 1) {
+                        if (assignment[i].team.houseId === assignment[i+1].team.houseId) {
+                            hasAdjacentSameHouse = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!hasAdjacentSameHouse) {
+                    valid = true;
+                    bestAssignment = assignment;
+                }
+            }
+
+            if (!valid) {
+                let shuffledLanes = [...availableLanes];
+                for (let i = shuffledLanes.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffledLanes[i], shuffledLanes[j]] = [shuffledLanes[j], shuffledLanes[i]];
+                }
+                bestAssignment = activeTeams.map((team, idx) => ({
+                    team: team,
+                    lane: shuffledLanes[idx]
+                }));
+            }
+
+            bestAssignment.forEach(item => {
+                let targetTeam = allTeams.find(t => t.uid === item.team.uid);
+                if (targetTeam) {
+                    targetTeam.lane = item.lane;
+                }
+            });
+
+            triggerAutoSync();
             renderContent();
-            showToast("Lorong berjaya dijana secara rawak!");
+            showToast("Lorong berjaya dijana & diselaraskan!");
         }
 
         function showModal(title, message, onConfirm) {
@@ -428,12 +646,11 @@
                 modalContent.classList.remove('scale-95');
             }, 10);
 
-            confirmAction = () => {
+            const confirmBtn = document.getElementById('modal-confirm-btn');
+            confirmBtn.onclick = () => {
                 closeModal();
                 if(onConfirm) onConfirm();
             };
-
-            document.getElementById('modal-confirm-btn').onclick = confirmAction;
         }
 
         function closeModal() {
@@ -461,7 +678,7 @@
 
         function getBorangMarshallHTML() {
             const teamsData = eventsData[currentEvent];
-            const isGenerated = teamsData.every(t => t.lane !== null);
+            const isGenerated = teamsData.some(t => t.lane !== null);
 
             let html = `
                 <div class="print-only text-center mb-8 mt-2">
@@ -479,7 +696,7 @@
                 `;
             }
 
-            const sortedByLane = [...teamsData].sort((a,b) => a.lane - b.lane);
+            const assignedTeams = [...teamsData].filter(t => t.lane !== null).sort((a,b) => a.lane - b.lane);
 
             html += `
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden print:border-none print:shadow-none">
@@ -502,7 +719,7 @@
                             <tbody class="text-sm">
             `;
 
-            sortedByLane.forEach(team => {
+            assignedTeams.forEach(team => {
                 const getRunner = (i) => team.runners[i] && team.runners[i].trim() !== '' ? team.runners[i] : '<span class="text-gray-300 italic no-print">-Tiada Nama-</span>';
                 
                 html += `
@@ -544,7 +761,7 @@
 
         function getBorangHakimHTML() {
             const teamsData = eventsData[currentEvent];
-            const isGenerated = teamsData.every(t => t.lane !== null);
+            const isGenerated = teamsData.some(t => t.lane !== null);
 
             let html = `
                 <div class="print-only text-center mb-8 mt-2">
@@ -562,7 +779,7 @@
                 `;
             }
 
-            const sortedByLane = [...teamsData].sort((a,b) => a.lane - b.lane);
+            const assignedTeams = [...teamsData].filter(t => t.lane !== null).sort((a,b) => a.lane - b.lane);
 
             html += `
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden print:border-none print:shadow-none">
@@ -583,7 +800,7 @@
                             <tbody class="text-gray-800 text-base">
             `;
 
-            sortedByLane.forEach(team => {
+            assignedTeams.forEach(team => {
                 html += `
                     <tr class="print:bg-white print:text-black">
                         <td class="py-6 px-4 border border-gray-300 print:border-black text-center font-bold text-2xl bg-gray-50 print:bg-white">${team.lane}</td>
